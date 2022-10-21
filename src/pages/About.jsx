@@ -1,4 +1,19 @@
+import {useEffect} from "react";
 function About() {
+  useEffect(() => {
+    const script = document.createElement('script');
+
+    script.src = 'https://platform.linkedin.com/badges/js/profile.js';
+    script.async = true;
+    script.defer = true;
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
     return (
       <>
         <h1 className="text-6xl mb-4">GitHub App</h1>
@@ -9,9 +24,15 @@ function About() {
           Version <span>1.0</span>
         </p>
         <p className="text-lg text-gray-500">
-          Layout By:
-          <a href="https://twitter.com/ankitmvp">Devesh Pandey</a>
+          Developed By:
+          <a href="https://www.linkedin.com/in/devesh-pandey-019b46ab/"> Devesh Pandey</a>
         </p>
+        {/* <p className="text-lg text-gray-500">
+          <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" 
+            data-theme="light" data-type="HORIZONTAL" data-vanity="devesh-pandey-019b46ab" 
+            data-version="v1">
+          </div>
+        </p> */}
       </>
     );
   }

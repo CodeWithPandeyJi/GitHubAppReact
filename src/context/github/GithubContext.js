@@ -12,7 +12,8 @@ export const GithubProvider = ({ children }) => {
         users: [],
         user: {},
         repos: [],
-        loading: false
+        loading: false,
+        tokenexpired: false,
     }
 
     const URL = process.env.REACT_APP_GITHUB_URL;
@@ -45,15 +46,23 @@ export const GithubProvider = ({ children }) => {
             q: text,
         })
 
-        const response = await fetch(`${ URL }/search/users?${ params }`,{
+        await fetch(`${ URL }/search/users?${ params }`,{
             headers: {
                 Authorization: `token ${ token }`
             },
-        });
-
-        const { items } = await response.json();
-
-        dispatch({type: "GET_USERS" , payload: items });
+        })
+        .then(async res => {
+                if(res.ok) {
+                  const { items } = await res.json();
+                  dispatch({type: "GET_USERS" , payload: items });
+                }
+                else {
+                  dispatch({type: "SET_TOKENEXPIRY" , payload: true });
+                }
+            }
+        );
+        //const { items } = await response.json();
+        //dispatch({type: "GET_USERS" , payload: items });
     };
 
     const clearUsers = () => {
@@ -98,6 +107,7 @@ export const GithubProvider = ({ children }) => {
             user: state.user,
             repos:state.repos, 
             loading: state.loading,
+            tokenexpired: state.tokenexpired,
             searchUsers,
             clearUsers,
             fetchUsers,

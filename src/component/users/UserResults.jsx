@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 import GithubContext from "../../context/github/GithubContext";
+import TokenExpired from "../../pages/TokenExpired";
 import UserItem from "./UserItem";
 function UserResults() {
 
-  const {users , loading , fetchUsers} = useContext(GithubContext);
+  const {users , loading , tokenexpired, fetchUsers} = useContext(GithubContext);
 
   useEffect(() => {
     //fetchUsers();
@@ -22,7 +23,7 @@ function UserResults() {
       </div>
     );
   }
-  if (!loading) {
+  if (!loading && !tokenexpired) {
     return (
       <div className='grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2'>
         {users.map((user,index) => (
@@ -30,6 +31,11 @@ function UserResults() {
         ))}
       </div>
     );
+  }
+  else{
+    return(
+      <TokenExpired />
+    )
   }
 }
 export default UserResults;

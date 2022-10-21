@@ -13,13 +13,14 @@ function UserSearch() {
         setText(e.target.value);
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
+        e.stopPropagation();
         if(text === ""){
           setAlert("Text box cant be empty..","Error");
         }
         else{
-            searchUsers(text);
+             await searchUsers(text);
             setText("");
         }
     }

@@ -9,12 +9,13 @@ import { GithubProvider } from "./context/github/GithubContext";
 import { AlertProvider } from "./context/alert/AlertContext";
 import Alert from "./component/layout/Alert";
 import User from "./pages/User";
+import {Helmet} from "react-helmet";
+import TokenExpired from "./pages/TokenExpired";
 function App() {
   return (
     <>
     <GithubProvider>
       <AlertProvider>
-
         <Router>
           <div className='flex flex-col justify-between h-screen'>
             <Header />
@@ -25,6 +26,7 @@ function App() {
                 <Route path='/user/:login' element={<User />}  />
                 <Route path='/notfound' element={<NotFound />} />
                 <Route path='/*' element={<NotFound />} />
+                <Route path='/tokenexpired' element={<TokenExpired />} /> 
               </Routes>
               <Alert />
             </main>

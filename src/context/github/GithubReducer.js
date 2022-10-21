@@ -35,6 +35,13 @@ const githubReducer =(currentState,action) => {
                   repos: action.payload,
                   loading: false,
             };
+        
+        case "SET_TOKENEXPIRY" :
+            return {
+                ...currentState,
+                loading: false,
+                tokenexpired: action.payload, //true;
+            };
         default :
             return currentState;
     }
